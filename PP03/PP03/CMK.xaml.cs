@@ -47,6 +47,7 @@ namespace PP03
             InitializeComponent();
         }
 
+        //DataGrid
         private void dgFill(string qr)
         {
             Action action = () =>
@@ -67,6 +68,7 @@ namespace PP03
                 dgFill(QR);
         }
 
+        //Загрузка таблицы
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             QR = DBConnection.qrCMK;
@@ -74,15 +76,14 @@ namespace PP03
 
         }
 
-
+        //Заполнение 
         private void DgCMK_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             switch (e.Column.Header)
             {
                 case ("Name_CMK"):
                     e.Column.Header = "Название";
-                    break;
-                
+                    break;             
             }         
         }
 
@@ -111,69 +112,51 @@ namespace PP03
 
         }
 
+        //Функция импорта
         private void BtCMK_Import_Click(object sender, RoutedEventArgs e)
         {
-
+            //Открытие OpenFileDialog
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = false;
+            //Расширение файлов и фильтр
             ofd.DefaultExt = "*.xls;*.xlsx";
             ofd.Filter = "Microsoft Excel (*.xls*)|*.xls*";
-            ofd.Title = "Выберите документ Excel";
+            ofd.Title = "Выберите документ";
+
+            //Условие: если результат положительный тогда
             if (ofd.ShowDialog() == true)
             {
                 Application xlApp = new Application();
+                //Открытие файла
                Workbook xlWorkbook = xlApp.Workbooks.Open(ofd.FileName, Type.Missing, true);
 
                 _Worksheet list_1 = (_Worksheet)xlWorkbook.Sheets[1]; //Получаем последний лист
                 Range xlRange_1 = list_1.UsedRange; //Получаем используемый сектор ячеек в листе
 
-                int Row_CMK = 1;
-                int Cell_CMK = 1;
+                int Row_CMK = 1; //строка
+                int Cell_CMK = 1; //ячека
                 while (Name_CMK != "")
                 {
-                    Name_CMK = xlRange_1.Cells[Row_CMK, Cell_CMK].Text; // Таблица ЦМК
+                    Name_CMK = xlRange_1.Cells[Row_CMK, Cell_CMK].Text;
                     queryOfTables("INSERT INTO CMK values('" + Name_CMK + "')");
                     Row_CMK++;
+                    Name_CMK = xlRange_1.Cells[Row_CMK, Cell_CMK].Text; // Таблица ЦМК
+    
                 }
 
             }
             else
             {
+                //Предупреждение, файл не выбран
                 MessageBox.Show("Вы не выбрали файл для открытия", "Внимание", MessageBoxButton.OK);
                return;
             }
 
             string xlFileName = ofd.FileName;
-
-
-            //string TestExcel = @"C:\Users\User\Desktop\Импорт.xlsx";
-
-            // xlWorkbook.Close();
-
-
-            ////создаем обьект приложения word
-            //application = new Word.Application();
-            //// создаем путь к файлу
-            //Object templatePathObj = @"C:\Users\CVR3X\Desktop\Импорт для РР03.docx"; ;
-
-            //try
-            //{
-            //    document = application.Documents.Add(ref templatePathObj, ref missingObj, ref missingObj, ref missingObj);
-            //}
-            //catch (Exception error)
-            //{
-            //    document.Close(ref falseObj, ref missingObj, ref missingObj);
-            //    application.Quit(ref missingObj, ref missingObj, ref missingObj);
-            //    document = null;
-            //    application = null;
-            //    throw error;
-            //}
-            //application.Visible = true;
-
-
-            
+            dgFill(QR);
         }
 
+        //Функция закрытия окна / возврат в главное меню
         private void BtClose_Click_1(object sender, RoutedEventArgs e)
         {
             MainWindow MainWindow = new MainWindow();
@@ -181,34 +164,39 @@ namespace PP03
             Visibility = Visibility.Collapsed;
         }
 
-
+        //Процедура добавления данных
         private void BtCMK_InsertType_Click(object sender, RoutedEventArgs e)
         {
             if (tbCMK.Text == "")
             {
+                //Предупреждение о пустых полях
                 MessageBox.Show("Поля пусты!" +
                 "  Повторите попытку ввода!", "Error",
                 MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
+                //Процедура добавления 
                 procedures.resCMK_insert(tbCMK.Text.ToString());
                 dgFill(QR);
             }
    
         }
 
+        //Процедура обновления данных
         private void btCMK_UpdateType_Click(object sender, RoutedEventArgs e)
         {
            
             if (tbCMK.Text == "")
             {
+                //Предупреждение о пустых полях
                 MessageBox.Show("Поля пусты!" +
                 "  Выберите запись!", "Error",
                 MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
+                //Процедура обновления 
                 DataRowView ID = (DataRowView)dgCMK.SelectedItems[0];
                 procedures.resCMK_update(Convert.ToInt32(ID["ID_CMK"]), tbCMK.Text.ToString());
                 dgFill(QR);
@@ -216,16 +204,19 @@ namespace PP03
 
         }
 
+        //Процедура удаления данных
         private void btCMK_DeleteType_Click(object sender, RoutedEventArgs e)
         {
             if (tbCMK.Text == "")
             {
+                //Предупреждение о пустых полях
                 MessageBox.Show("Поля пусты!" +
                 "  Выберите запись!", "Error",
                 MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
+                //Процедура удаления
                 DataRowView ID = (DataRowView)dgCMK.SelectedItems[0];
                 procedures.resCMK_delete(Convert.ToInt32(ID["ID_CMK"]));
                 dgFill(QR);
@@ -233,9 +224,16 @@ namespace PP03
           
         }
 
+        //Функция поиска
         private void btSearch_Click(object sender, RoutedEventArgs e)
         {
-            
+            foreach (DataRowView dataRow in (DataView)dgCMK.ItemsSource)
+            {
+                if (dataRow.Row.ItemArray[1].ToString() == tbSearch.Text)                   
+                {
+                    dgCMK.SelectedItem = dataRow;
+                }
+            }
         }
     }
 }

@@ -12,7 +12,7 @@
             <RowDefinition Height="55*"></RowDefinition>
             <RowDefinition Height="50*"></RowDefinition>
             <RowDefinition Height="50*"></RowDefinition>
-           
+
             <RowDefinition Height="127*"></RowDefinition>
             <RowDefinition Height="84*"></RowDefinition>
             <RowDefinition Height="65*"></RowDefinition>
@@ -23,7 +23,7 @@
         </Grid.ColumnDefinitions>
         <Label Name="lblTitle" Content="Шаблоны документов" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1"
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30">
-            
+
         </Label>
         <DataGrid Name="dgDocument_Template" IsReadOnly="True" Grid.Column="1" Margin="30,40,30,40"
                 Grid.RowSpan="7" ColumnWidth="auto" AutoGenerateColumns="True" AutoGeneratingColumn="dgDocument_Template_AutoGeneratingColumn"  />
@@ -34,11 +34,18 @@
                     <TextBox Background="LightGray" Name="tbDocument_Name" Grid.Row="2" Margin="20,0,0,0"
                              Text="{Binding SelectedItem.Document_Name,
                                  ElementName=dgDocument_Template}">
-                        
+
                     </TextBox>
                 </Border>
             </StackPanel>
         </UniformGrid>
+
+        <TextBlock Margin="452,119,10,10" Grid.Row="4">
+                <Hyperlink FontSize="16" Foreground="Black" NavigateUri="https://drive.google.com/drive/u/0/my-drive" RequestNavigate="Hyperlink_RequestNavigate">Перейти на диск</Hyperlink>
+        </TextBlock>
+
+
+
         <UniformGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1">
             <StackPanel Grid.Column="0" >
                 <Label Name="lblPath_To_File" FontSize="16" Content="Путь к файлу:" Grid.Row="5" ></Label>
@@ -58,9 +65,9 @@
                 <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btDocument_Template_DeleteType" 
                         Content="Удалить запись" Height="30" Click="BtDocument_Template_DeleteType_Click" Margin="125,10,125,17"></Button>
                 <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btDocument_Template_Open" 
-                        Content="Добавить документ" Height="30"  Margin="165,10,165,17" Click="btDocument_Template_Open_Click"></Button>
+                        Content="Добавить шаблон" Height="30"  Margin="165,10,165,17" Click="btDocument_Template_Open_Click"></Button>
             </StackPanel>
-            
+
         </UniformGrid>
         <UniformGrid Grid.Row="4" Grid.Column="0">
             <StackPanel>

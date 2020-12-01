@@ -28,9 +28,18 @@
         <Label Name="lblTitle" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Content="Переход по таблицам" 
                HorizontalContentAlignment="Center" FontSize="30" Margin="58,0,65,0">
         </Label>
-        <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" Name="btDocument_Template" Content="Шаблоны" Grid.Column="1" Grid.Row="1" FontSize="16" Click="BtDocument_Template_Click" Grid.ColumnSpan="2"   />
-        <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" Name="btDocuments_EU" Content="Документы УЕ" Grid.Column="1" Grid.Row="2" FontSize="16" Click="BtDocuments_EU_Click" Grid.ColumnSpan="2"   />
-        <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" Name="btCMK" Content="ЦМК" Grid.Column="1" Grid.Row="3" FontSize="16" Click="BtCMK_Click" Grid.ColumnSpan="2" ></Button>
-        <!--<Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" Name="bt2" Content="-" Grid.Column="1" Grid.Row="4" FontSize="16" Grid.ColumnSpan="2" ></Button>-->
+        <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" Name="btDocument_Template" Content="Шаблоны" 
+                Grid.Column="1" Grid.Row="1" FontSize="16" Click="BtDocument_Template_Click" Grid.ColumnSpan="2"   />
+        <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" Name="btDocuments_EU" Content="Документы УЕ" 
+                Grid.Column="1" Grid.Row="2" FontSize="16" Click="BtDocuments_EU_Click" Grid.ColumnSpan="2"   />
+        <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" Name="btCMK" Content="ЦМК" Grid.Column="1" 
+                Grid.Row="3" FontSize="16" Click="BtCMK_Click" Grid.ColumnSpan="2" ></Button>
+        <!--<Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" Name="bt2" Content="-" Grid.Column="1" 
+        Grid.Row="4" FontSize="16" Grid.ColumnSpan="2" ></Button>-->
+
+        <TextBlock Margin="79,67,0,0" Grid.Row="7" Grid.Column="3">
+                <Hyperlink FontSize="16" Foreground="Black" NavigateUri="https://docs.google.com/forms/d/e/1FAIpQLSdRImqzwKaoUe1jsBVvi0M72GTCdEAxZ7-tG10qXfD9-__3BQ/viewform" 
+                           RequestNavigate="Hyperlink_RequestNavigate">Оценить приложение</Hyperlink>
+        </TextBlock>
     </Grid>
 </Window>

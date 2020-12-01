@@ -19,7 +19,6 @@ namespace PP03
 
         public DataTable dtDocument_Template = new DataTable("Document_Template");
         public DataTable dtDocuments_EU = new DataTable("Documents_EU");
-        public DataTable dtDocuments_NULL = new DataTable("Documents_NULL");
         public DataTable dtEducational_Unit = new DataTable("Documents_EU");
         public DataTable dtType_Of_Educational_Unit = new DataTable("Type_Of_Educational_Unit");
         public DataTable dtForm_Of_Control = new DataTable("Form_Of_Control");
@@ -33,16 +32,10 @@ namespace PP03
         ///
         qrDocument_Template = "SELECT [ID_Document_Template], [Path_To_File], [Document_Name] FROM [dbo].[Document_Template]",
 
-        qrDocuments_EU = "SELECT [ID_Documents_EU], [Document_Title], [Link_To_The_Document], [Document_Name] as \"Название документа\", [Prefix] as \"Префикс\" " +
+        qrDocuments_EU = "SELECT [ID_Documents_EU], [Document_Title], [Link_To_The_Document], [Document_Name] as \"Название шаблона\", [Prefix] as \"Префикс\" " +
          " FROM [dbo].[Documents_EU] INNER JOIN [dbo].[Document_Template] ON [dbo].[Documents_EU].[Document_Template_ID] = " +
          " [dbo].[Document_Template].[ID_Document_Template] INNER JOIN [dbo].[EU_CMK_RUP] ON " +
          " [dbo].[Documents_EU].[EU_CMK_RUP_ID] = [dbo].[EU_CMK_RUP].[ID_EU_CMK_RUP]",
-
-        qrDocuments_NULL = "SELECT [ID_Documents_EU], [Document_Title], [Link_To_The_Document], [Document_Name] as \"Название документа\", [Prefix] as \"Префикс\" " +
-         " FROM [dbo].[Documents_EU] INNER JOIN [dbo].[Document_Template] ON [dbo].[Documents_EU].[Document_Template_ID] = " +
-         " [dbo].[Document_Template].[ID_Document_Template] INNER JOIN [dbo].[EU_CMK_RUP] ON " +
-         " [dbo].[Documents_EU].[EU_CMK_RUP_ID] = [dbo].[EU_CMK_RUP].[ID_EU_CMK_RUP] where Link_To_The_Document is null",
-
 
         qrEducational_Unit = "SELECT [ID_Educational_Unit], [Name_Of_The_EU] FROM [dbo].[Educational_Unit]",
 
@@ -95,12 +88,6 @@ namespace PP03
         {
             dtFill(dtDocuments_EU, qrDocuments_EU);
         }
-
-        public void Documents_NULL_Fill()
-        {
-            dtFill(dtDocuments_NULL, qrDocuments_NULL);
-        }
-
 
         public void Educational_Unit_Fill()
         {

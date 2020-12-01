@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace PP03
 {
@@ -25,6 +26,7 @@ namespace PP03
             InitializeComponent();
         }
 
+        //Переход к таблице "Шаблоны"
         private void BtDocument_Template_Click(object sender, RoutedEventArgs e)
         {
             Document_Template document_Template = new Document_Template();
@@ -33,6 +35,7 @@ namespace PP03
 
         }
 
+        //Переход к таблице "Документы учебной единицы"
         private void BtDocuments_EU_Click(object sender, RoutedEventArgs e)
         {
             Documents_EU documents_EU = new Documents_EU();
@@ -40,11 +43,19 @@ namespace PP03
             Hide();
         }
 
+        //Переход к таблице "ЦМК"
         private void BtCMK_Click(object sender, RoutedEventArgs e)
         {
             CMK cMK = new CMK();
             cMK.Show();
             Hide();
+        }
+
+        //Переход по гиперссылке
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
         }
     }
 }
