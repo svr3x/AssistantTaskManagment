@@ -22,15 +22,23 @@ namespace PP03
     /// </summary>
     public partial class Documents_EU : Window
     {
-        DBProcedures procedures = new DBProcedures();
-        private string QR = "";
+        
+        private SqlCommand command = new SqlCommand("", DBConnection.connection);
+        
 
         public Documents_EU()
         {
-            InitializeComponent();
+            InitializeComponent();          
             cbDocument_Template_Fill();
-           //cbEU_CMK_RUP_Fill();
+            cbEU_CMK_RUP_Fill();
+            
         }
+        
+        private string QR = "";
+        DBProcedures procedures = new DBProcedures();
+        
+
+
 
         private void cbDocument_Template_Fill()
         {
@@ -42,26 +50,42 @@ namespace PP03
             
         }
 
-        //private void cbEU_CMK_RUP_Fill()
-        //{
-        //    DBConnection connection = new DBConnection();
-        //    connection.EU_CMK_RUP_Fill();
-        //    cbEU_CMK_RUP.ItemsSource = connection.dtEU_CMK_RUP.DefaultView;
-        //    cbEU_CMK_RUP.SelectedValuePath = "ID_EU_CMK_RUP";
-        //    cbEU_CMK_RUP.DisplayMemberPath = "Prefix";
+        private void cbEU_CMK_RUP_Fill()
+        {
+            DBConnection connection = new DBConnection();
+            connection.EU_CMK_RUP_Fill();
+            cbEU_CMK_RUP.ItemsSource = connection.dtEU_CMK_RUP.DefaultView;
+            cbEU_CMK_RUP.SelectedValuePath = "ID_EU_CMK_RUP";
+            cbEU_CMK_RUP.DisplayMemberPath = "Prefix";
 
-        //}
+        }
 
         private void dgFill(string qr)
         {
             Action action = () =>
             {
-                DBConnection connection = new DBConnection();
-                DBConnection.qrDocuments_EU = qr;
-                connection.Documents_EU_Fill();
+                DBConnection connection = new DBConnection();                          
+                DBConnection.qrDocuments_EU = qr;              
+                connection.Documents_EU_Fill();            
                 connection.Dependency.OnChange += Dependency_OnChange;
                 dgDocuments_EU.ItemsSource = connection.dtDocuments_EU.DefaultView;
                 dgDocuments_EU.Columns[0].Visibility = Visibility.Collapsed;
+        
+            };
+            Dispatcher.Invoke(action);
+        }
+
+        private void dgFill2(string qr)
+        {
+            Action action = () =>
+            {
+                DBConnection connection = new DBConnection();
+                DBConnection.qrDocuments_NULL = qr;
+                connection.Documents_NULL_Fill();
+                connection.Dependency.OnChange += Dependency_OnChange;
+                dgTest.ItemsSource = connection.dtDocuments_NULL.DefaultView;
+                dgTest.Columns[0].Visibility = Visibility.Collapsed;
+
             };
             Dispatcher.Invoke(action);
         }
@@ -70,29 +94,73 @@ namespace PP03
         {
             if (e.Info != SqlNotificationInfo.Invalid)
                 dgFill(QR);
+            if (e.Info != SqlNotificationInfo.Invalid)
+                dgFill2(QR);
+            
         }
 
         private void BtDocuments_EU_InsertType_Click(object sender, RoutedEventArgs e)
         {
-            procedures.resDocuments_EU_insert(tbDocument_Title.Text.ToString(), tbLink_To_The_Document.Text.ToString(),
+            if (tbDocument_Title.Text == "" | cbDocument_Template.SelectedIndex == -1 | cbEU_CMK_RUP.SelectedIndex == -1)
+            {
+                MessageBox.Show("Поля пусты!" +
+                "  Повторите попытку ввода!", "Error",
+                MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                procedures.resDocuments_EU_insert(tbDocument_Title.Text.ToString(), tbLink_To_The_Document.Text.ToString(),
                 Convert.ToInt32(cbDocument_Template.SelectedValue.ToString()), Convert.ToInt32(cbEU_CMK_RUP.SelectedValue.ToString()));
-            dgFill(QR);
+                dgFill(QR);
+            }
+
+
+            //string myobject = tbLink_To_The_Document.Text; 
+            
+            //if (tbLink_To_The_Document.Text == "" | tbLink_To_The_Document.Text == null)
+            //{
+            //    command.Parameters.AddWithValue(myobject, DBNull.Value);
+            //}
+            
+
         }
 
         private void BtDocuments_EU_UpdateType_Click(object sender, RoutedEventArgs e)
         {
-            DataRowView ID = (DataRowView)dgDocuments_EU.SelectedItems[0];
-
-            procedures.resDocuments_EU_update(Convert.ToInt32(ID["ID_Documents_EU"]), tbDocument_Title.Text.ToString(), tbLink_To_The_Document.Text.ToString(),
-                Convert.ToInt32(cbDocument_Template.SelectedValue.ToString()), Convert.ToInt32(cbEU_CMK_RUP.SelectedValue.ToString()));
-            dgFill(QR);
+            if (tbDocument_Title.Text == "" | cbDocument_Template.SelectedIndex == -1 | cbEU_CMK_RUP.SelectedIndex == -1)
+            {
+                MessageBox.Show("Поля пусты!" +
+                "  Выберите запись!", "Error",
+                MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                DataRowView ID = (DataRowView)dgDocuments_EU.SelectedItems[0];
+                procedures.resDocuments_EU_updated(Convert.ToInt32(ID["ID_Documents_EU"]), tbDocument_Title.Text.ToString(), tbLink_To_The_Document.Text.ToString(),
+                    Convert.ToInt32(cbDocument_Template.SelectedValue.ToString()), Convert.ToInt32(cbEU_CMK_RUP.SelectedValue.ToString()));
+                dgFill(QR);
+                
+            }
+   
         }
 
         private void BtDocuments_EU_DeleteType_Click(object sender, RoutedEventArgs e)
         {
-            DataRowView ID = (DataRowView)dgDocuments_EU.SelectedItems[0];
-            procedures.resDocuments_EU_delete(Convert.ToInt32(ID["ID_Documents_EU"]));
-            dgFill(QR);
+            if (tbDocument_Title.Text == "" | cbDocument_Template.SelectedIndex == -1 | cbEU_CMK_RUP.SelectedIndex == -1)
+            {
+                MessageBox.Show("Поля пусты!" +
+                "  Выберите запись!", "Error",
+                MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                DataRowView ID = (DataRowView)dgDocuments_EU.SelectedItems[0];
+                procedures.resDocuments_EU_delete(Convert.ToInt32(ID["ID_Documents_EU"]));
+                dgFill(QR);
+            }
+
+           
+
         }
 
         private void BtClose_Click(object sender, RoutedEventArgs e)
@@ -122,6 +190,13 @@ namespace PP03
         {
             QR = DBConnection.qrDocuments_EU;
             dgFill(QR);
+            cbDocument_Template_Fill();
+            cbEU_CMK_RUP_Fill();
+
+
+            QR = DBConnection.qrDocuments_NULL;
+            dgFill2(QR);
+        
         }
 
         private void DgDocuments_EU_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
@@ -134,10 +209,10 @@ namespace PP03
                 case ("Link_To_The_Document"):
                     e.Column.Header = "Ссылка на документ";
                     break;
-                case ("Document_Temlate"):
+                case ("Document_Name"):
                     e.Column.Header = "Шаблон";
                     break;
-                case ("EU_CMK_RUP"):
+                case ("Prefix"):
                     e.Column.Header = "Префикс";
                     break;
             }
@@ -153,5 +228,49 @@ namespace PP03
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
         }
+
+        private void dgTest_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            switch (e.Column.Header)
+            {
+                case ("Document_Title"):
+                    e.Column.Header = "Название документа";
+                    break;
+                case ("Link_To_The_Document"):
+                    e.Column.Header = "Ссылка на документ";
+                    break;
+                case ("Document_Name"):
+                    e.Column.Header = "Шаблон";
+                    break;
+                case ("Prefix"):
+                    e.Column.Header = "Префикс";
+                    break;
+            }
+        }
+
+        private void btOpen_Click(object sender, RoutedEventArgs e)
+        {
+            dgTest.Visibility = Visibility.Visible;
+            btOpen.Visibility = Visibility.Hidden;
+            btHide.Visibility = Visibility.Visible;
+        }
+
+        private void btHide_Click(object sender, RoutedEventArgs e)
+        {
+            dgTest.Visibility = Visibility.Hidden;
+            btOpen.Visibility = Visibility.Visible;
+            btHide.Visibility = Visibility.Hidden;
+        }
+
+        private void cbDocument_Template_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+
+        //private void dgTest_Loaded(object sender, RoutedEventArgs e)
+        //{
+
+
+        //}
     }
 }

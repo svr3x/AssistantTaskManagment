@@ -3,63 +3,73 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:design="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PP03"
         mc:Ignorable="d"
-        Title="CMK" Height="700" Width="1000" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Background="LightGray">
+        Title="CMK" Height="800" Width="1200" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Background="LightGray">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="77*"></RowDefinition>
-            <RowDefinition Height="77*"></RowDefinition>
-            <RowDefinition Height="78*"></RowDefinition>
-            <RowDefinition Height="77*"></RowDefinition>
-            <RowDefinition Height="90*"></RowDefinition>
+            <RowDefinition Height="83*"></RowDefinition>
+            <RowDefinition Height="70*"></RowDefinition>
+            
+            <RowDefinition Height="127*"></RowDefinition>
+            
+            <RowDefinition Height="70*"></RowDefinition>
+            <RowDefinition Height="84*"></RowDefinition>
             <RowDefinition Height="65*"></RowDefinition>
-            <RowDefinition Height="78*"></RowDefinition>
-            <RowDefinition Height="77*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label Name="lblTitle" Content="ЦМК" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-               VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30"></Label>
-        <DataGrid Name="dgCMK" Grid.Row="1" IsReadOnly="True" Grid.Column="0" Grid.ColumnSpan="2"
-                Grid.RowSpan="2" ColumnWidth="auto" AutoGenerateColumns="True" AutoGeneratingColumn="DgCMK_AutoGeneratingColumn"  >
-        </DataGrid>
-        <UniformGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+        <Label Name="lblTitle" Content="ЦМК" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30">
+            
+        </Label>
+            <DataGrid Name="dgCMK" IsReadOnly="True" Grid.Column="1"
+                Grid.RowSpan="8" ColumnWidth="auto" AutoGenerateColumns="True" AutoGeneratingColumn="DgCMK_AutoGeneratingColumn" Margin="30,40,30,40"  />
+        
+        <UniformGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
             <StackPanel Grid.Column="1" >
                 <Label Name="lblName_CMK" FontSize="16" Content="Название:" Grid.Row="5" ></Label>
-                <Border BorderThickness="1" BorderBrush="Black"  >
-                    <TextBox Background="LightGray" Name="tbName_CMK" Grid.Row="2" 
+                <Border BorderThickness="0" BorderBrush="Black"  >
+                    <TextBox Background="LightGray" Name="tbCMK" Grid.Row="2" Margin="20,0,0,0"
                              Text="{Binding SelectedItem.Name_CMK,
-                                 ElementName=dgCMK}"></TextBox>
+                                 ElementName=dgCMK}">
+
+                    </TextBox>
                 </Border>
             </StackPanel>
         </UniformGrid>
 
-        <UniformGrid Grid.Row="4" Grid.ColumnSpan="2">
+        <UniformGrid Grid.Row="2" Grid.ColumnSpan="1">
             <StackPanel>
-                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btCMK_InsertType" Content="Добавить запись" Height="30" Click="BtCMK_InsertType_Click"   ></Button>
-                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btCMK_UpdateType" Content="Изменить запись" Height="30"  ></Button>
-                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btCMK_DeleteType" Content="Удалить запись" Height="30"  ></Button>
+                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" x:Name="btCMK_InsertType" Content="Добавить запись" Height="30" Click="BtCMK_InsertType_Click" Margin="125,10,125,18"   />
+                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" x:Name="btCMK_UpdateType" Content="Изменить запись" Height="30" Margin="125,1,125,18" Click="btCMK_UpdateType_Click"  />
+                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" x:Name="btCMK_DeleteType" Content="Удалить запись" Height="30" Margin="125,1,125,17" Click="btCMK_DeleteType_Click"  />
             </StackPanel>
         </UniformGrid>
 
-        <UniformGrid Grid.Row="6" Grid.ColumnSpan="2">
+        <UniformGrid Grid.Row="3" Grid.ColumnSpan="1">
 
             <StackPanel>
-                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btCMK_Import" Content="Импорт данных" Height="30" Click="BtCMK_Import_Click" ></Button>
+                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btCMK_Import" 
+                        Content="Импорт данных" Height="30" Click="BtCMK_Import_Click" Margin="165,25,165,21" >
+                    
+                </Button>
             </StackPanel>
+                
+            
         </UniformGrid>
 
 
-        <UniformGrid Grid.Row="7" Grid.Column="0">
+        <UniformGrid Grid.Row="4" Grid.Column="0">
             <StackPanel>
-                <TextBox Background="LightGray"  Name="tbSearch"  Height="30" Grid.Column="0" ></TextBox>
-                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btSearch" Content="Поиск" Height="30" VerticalAlignment="Top"  ></Button>
-                <CheckBox Name="chbFilter" Content="Отфильтровать" VerticalAlignment="Center"  FontSize="10" Height="20" ></CheckBox>
+                <TextBox Background="LightGray"  Name="tbSearch"  Height="30" Grid.Column="0" Margin="20,0,20,0" ></TextBox>
+                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btSearch" Content="Поиск" Height="30" VerticalAlignment="Top" Margin="125,13,125,0" Click="btSearch_Click"  ></Button>
+                <CheckBox x:Name="chbFilter" Content="Отфильтровать" VerticalAlignment="Center"  FontSize="10" Height="20" Margin="0,0,399,0" />
             </StackPanel>
         </UniformGrid>
-        <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btClose" Content="Закрыть" Grid.Row="7" Grid.Column="1"  Margin="0,0,0,28" Click="BtClose_Click_1" />
+        <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btClose" Content="Закрыть" Grid.Row="7" Grid.Column="0"  Margin="125,25,125,27" Click="BtClose_Click_1" Height="30" />
     </Grid>
 </Window>

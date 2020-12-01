@@ -17,7 +17,7 @@ namespace PP03
 
 
 
-        private SqlCommand command = new SqlCommand("", Configuration_Class.connection);
+        private SqlCommand command = new SqlCommand("", DBConnection.connection);
         
 
         private void commandConfig(string config)
@@ -74,9 +74,9 @@ namespace PP03
             DBConnection.connection.Close();
         }
 
-        public void resDocuments_EU_update(Int32 ID_Documents_EU, string Document_Title, string Link_To_The_Document, Int32 Document_Template_ID, Int32 EU_CMK_RUP_ID)
+        public void resDocuments_EU_updated(Int32 ID_Documents_EU, string Document_Title, string Link_To_The_Document, Int32 Document_Template_ID, Int32 EU_CMK_RUP_ID)
         {
-            commandConfig("Documents_EU_update");
+            commandConfig("Documents_EU_updated");
 
             command.Parameters.AddWithValue("@ID_Documents_EU", ID_Documents_EU);
             command.Parameters.AddWithValue("@Document_Title", Document_Title);
@@ -162,6 +162,48 @@ namespace PP03
             command.ExecuteNonQuery();
             DBConnection.connection.Close();
         }
+
+
+        public void resCMK_insert(string Name_CMK)
+        {
+            commandConfig("CMK_insert");
+
+            command.Parameters.AddWithValue("@Name_CMK", Name_CMK);
+
+            DBConnection.connection.Open();
+            command.ExecuteNonQuery();
+            DBConnection.connection.Close();
+        }
+
+        public void resCMK_update(Int32 ID_CMK, string Name_CMK)
+        {
+            commandConfig("CMK_update");
+            command.Parameters.AddWithValue("@ID_CMK", ID_CMK);
+            command.Parameters.AddWithValue("@Name_CMK", Name_CMK);
+
+            DBConnection.connection.Open();
+            command.ExecuteNonQuery();
+            DBConnection.connection.Close();
+        }
+
+        public void resCMK_delete(Int32 ID_CMK)
+        {
+            commandConfig("CMK_delete");
+
+            command.Parameters.AddWithValue("@ID_CMK", ID_CMK);
+
+            DBConnection.connection.Open();
+            command.ExecuteNonQuery();
+            DBConnection.connection.Close();
+        }
+
+
+
+
+
+
+
+
 
         public void Export_Word()
         {

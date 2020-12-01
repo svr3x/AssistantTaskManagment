@@ -13,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
+using Microsoft.Win32;
 
 namespace PP03
 {
@@ -27,6 +29,7 @@ namespace PP03
         public Document_Template()
         {
             InitializeComponent();
+      
         }
 
         private void dgFill(string qr)
@@ -64,22 +67,54 @@ namespace PP03
 
         private void BtDocument_Template_InsertType_Click(object sender, RoutedEventArgs e)
         {
-            procedures.resDocument_Template_insert(tbDocument_Name.Text.ToString(), tbPath_To_File.Text.ToString());
-            dgFill(QR);
+            
+            if (tbPath_To_File.Text == "" | tbDocument_Name.Text == "")
+            {
+                MessageBox.Show("Поля пусты!" +
+                "  Повторите попытку ввода!", "Error",
+                MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                procedures.resDocument_Template_insert(tbPath_To_File.Text.ToString(), tbDocument_Name.Text.ToString());
+                dgFill(QR);
+            }
+
         }
 
         private void BtDocument_Template_UpdateType_Click(object sender, RoutedEventArgs e)
         {
-            DataRowView ID = (DataRowView)dgDocument_Template.SelectedItems[0];
-            procedures.resDocument_Template_update(Convert.ToInt32(ID["ID_Document_Template"]), tbDocument_Name.Text.ToString(), tbPath_To_File.Text.ToString());
-            dgFill(QR);
+            if (tbPath_To_File.Text == "" | tbDocument_Name.Text == "")
+            {
+                MessageBox.Show("Поля пусты!" +
+                "  Выберите запись!", "Error",
+                MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                DataRowView ID = (DataRowView)dgDocument_Template.SelectedItems[0];
+                procedures.resDocument_Template_update(Convert.ToInt32(ID["ID_Document_Template"]), tbPath_To_File.Text.ToString(), tbDocument_Name.Text.ToString());
+                dgFill(QR);
+            }
+
+            
         }
 
         private void BtDocument_Template_DeleteType_Click(object sender, RoutedEventArgs e)
         {
-            DataRowView ID = (DataRowView)dgDocument_Template.SelectedItems[0];
-            procedures.resDocument_Template_delete(Convert.ToInt32(ID["ID_Document_Template"]));
-            dgFill(QR);
+            if (tbPath_To_File.Text == "" | tbDocument_Name.Text == "")
+            {
+                MessageBox.Show("Поля пусты!" +
+                "  Выберите запись!", "Error",
+                MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                DataRowView ID = (DataRowView)dgDocument_Template.SelectedItems[0];
+                procedures.resDocument_Template_delete(Convert.ToInt32(ID["ID_Document_Template"]));
+                dgFill(QR); 
+            }
+            
         }
 
         private void btClose_Click(object sender, RoutedEventArgs e)
@@ -105,6 +140,26 @@ namespace PP03
         {
             QR = DBConnection.qrDocument_Template;
             dgFill(QR);
+        }
+
+
+        private void btDocument_Template_Open_Click(object sender, RoutedEventArgs e)
+        {
+
+            OpenFileDialog  open = new OpenFileDialog();
+            open.InitialDirectory = "c:\\";
+            open.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            open.FilterIndex = 2;
+            open.RestoreDirectory = true;
+           
+            if (open.ShowDialog() == true)
+            {
+                tbPath_To_File.Text = open.FileName;
+                tbDocument_Name.Text = open.SafeFileName;
+
+            }
+
+
         }
     }
 }

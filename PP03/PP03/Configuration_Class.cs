@@ -12,9 +12,9 @@ namespace PP03
 {
     class Configuration_Class
     {
-        public event  Action<DataTable> server_Collection;
-        public event  Action<DataTable> Data_Base_Collection;
-        public event  Action<bool> connection_checked;
+        public event Action<DataTable> server_Collection;
+        public event Action<DataTable> Data_Base_Collection;
+        public event Action<bool> connection_checked;
 
         public string DS = "Empty", IC = "Empty";
         public string ds = "";

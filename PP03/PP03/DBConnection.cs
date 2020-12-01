@@ -19,6 +19,7 @@ namespace PP03
 
         public DataTable dtDocument_Template = new DataTable("Document_Template");
         public DataTable dtDocuments_EU = new DataTable("Documents_EU");
+        public DataTable dtDocuments_NULL = new DataTable("Documents_NULL");
         public DataTable dtEducational_Unit = new DataTable("Documents_EU");
         public DataTable dtType_Of_Educational_Unit = new DataTable("Type_Of_Educational_Unit");
         public DataTable dtForm_Of_Control = new DataTable("Form_Of_Control");
@@ -32,11 +33,17 @@ namespace PP03
         ///
         qrDocument_Template = "SELECT [ID_Document_Template], [Path_To_File], [Document_Name] FROM [dbo].[Document_Template]",
 
-        qrDocuments_EU = "SELECT [ID_Documents_EU], [Document_Title], [Link_To_The_Document], [Document_Name], [Prefix] " +
+        qrDocuments_EU = "SELECT [ID_Documents_EU], [Document_Title], [Link_To_The_Document], [Document_Name] as \"Название документа\", [Prefix] as \"Префикс\" " +
          " FROM [dbo].[Documents_EU] INNER JOIN [dbo].[Document_Template] ON [dbo].[Documents_EU].[Document_Template_ID] = " +
          " [dbo].[Document_Template].[ID_Document_Template] INNER JOIN [dbo].[EU_CMK_RUP] ON " +
          " [dbo].[Documents_EU].[EU_CMK_RUP_ID] = [dbo].[EU_CMK_RUP].[ID_EU_CMK_RUP]",
-        
+
+        qrDocuments_NULL = "SELECT [ID_Documents_EU], [Document_Title], [Link_To_The_Document], [Document_Name] as \"Название документа\", [Prefix] as \"Префикс\" " +
+         " FROM [dbo].[Documents_EU] INNER JOIN [dbo].[Document_Template] ON [dbo].[Documents_EU].[Document_Template_ID] = " +
+         " [dbo].[Document_Template].[ID_Document_Template] INNER JOIN [dbo].[EU_CMK_RUP] ON " +
+         " [dbo].[Documents_EU].[EU_CMK_RUP_ID] = [dbo].[EU_CMK_RUP].[ID_EU_CMK_RUP] where Link_To_The_Document is null",
+
+
         qrEducational_Unit = "SELECT [ID_Educational_Unit], [Name_Of_The_EU] FROM [dbo].[Educational_Unit]",
 
         qrType_Of_Educational_Unit = "SELECT [ID_Type_Of_Educational_Unit], [Number_Of_Type] FROM [dbo].[Type_Of_Educational_Unit]",
@@ -47,13 +54,14 @@ namespace PP03
             " [dbo].[Form_Of_Control_EU].[Form_Of_Control] = [dbo].[Form_Of_Control].[ID_Form_Of_Control]",
 
         qrEU_CMK_RUP = "SELECT [ID_EU_CMK_RUP], [Prefix], [Total_Number_Of_Hours], [Theoretical_Hours], [Lab_Prac_Hours], [Individual_Work], [Consultations], " +
-            "[Coursework_Project], [Interim_Certification], [Name_Of_The_EU], [Number_Of_Type], [Name_Of_The_Form], [Number_Of Semester], " +
-            " [RUP_ID], [CMK_ID], [EU_CMK_RUP_ID] FROM [dbo].[EU_CMK_RUP] " +
-            "INNER JOIN [dbo].[Educational_Unit] ON [dbo].[EU_CMK_RUP].[Educational_Unit] = [dbo].[Educational_Unit].[ID_Educational_Unit] " +
-            "INNER JOIN [dbo].[Type_Of_Educational_Unit] ON [dbo].[EU_CMK_RUP].[Type_Of_Educational_Unit] = [dbo].[Type_Of_Educational_Unit].[ID_Type_Of_Educational_Unit] " +
-            "INNER JOIN [dbo].[Form_Of_Control_EU] ON [dbo].[EU_CMK_RUP].[Form_Of_Control_EU] = [dbo].[Form_Of_Control_EU].[ID_Form_Of_Control_EU] " +
-            "INNER JOIN [dbo].[CMK_RUP] ON [dbo].[EU_CMK_RUP].[CMK_RUP] = [dbo].[CMK_RUP].[ID_CMK_RUP] " +
-            "INNER JOIN [dbo].[EU_CMK_RUP] ON [dbo].[EU_CMK_RUP].[EU_CMK_RUP] = [dbo].[EU_CMK_RUP].[ID_EU_CMK_RUP]",
+            " [Coursework_Project], [Interim_Certification], [Name_Of_The_EU], [Number_Of_Type], [Number_Of_Semester], [RUP_ID], [EU_CMK_RUP_ID] FROM [dbo].[EU_CMK_RUP] " +
+            " INNER JOIN [dbo].[Educational_Unit] ON [dbo].[EU_CMK_RUP].[Educational_Unit_ID] = [dbo].[Educational_Unit].[ID_Educational_Unit] " +
+            " INNER JOIN [dbo].[Type_Of_Educational_Unit] ON [dbo].[EU_CMK_RUP].[Type_Of_Educational_Unit_ID] = [dbo].[Type_Of_Educational_Unit].[ID_Type_Of_Educational_Unit] " +
+            " INNER JOIN [dbo].[Form_Of_Control_EU] ON [dbo].[EU_CMK_RUP].[Form_Of_Control_EU_ID] = [dbo].[Form_Of_Control_EU].[ID_Form_Of_Control_EU] " +
+            " INNER JOIN [dbo].[CMK_RUP] ON [dbo].[EU_CMK_RUP].[CMK_RUP_ID] = [dbo].[CMK_RUP].[ID_CMK_RUP]", 
+           // " INNER JOIN [dbo].[EU_CMK_RUP] ON [dbo].[EU_CMK_RUP].[EU_CMK_RUP_ID] = [dbo].[EU_CMK_RUP].[ID_EU_CMK_RUP] ",
+
+
 
         qrCMK = " SELECT [ID_CMK], [Name_CMK] FROM [dbo].[CMK]";
 
@@ -81,17 +89,24 @@ namespace PP03
         {
             dtFill(dtDocument_Template, qrDocument_Template);
         }
+   
 
         public void Documents_EU_Fill()
         {
             dtFill(dtDocuments_EU, qrDocuments_EU);
         }
 
+        public void Documents_NULL_Fill()
+        {
+            dtFill(dtDocuments_NULL, qrDocuments_NULL);
+        }
+
+
         public void Educational_Unit_Fill()
         {
             dtFill(dtEducational_Unit, qrEducational_Unit);
         }
-
+      
         public void Type_Of_Educational_Unit_Fill()
         {
             dtFill(dtType_Of_Educational_Unit, qrType_Of_Educational_Unit);

@@ -3,106 +3,130 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:design="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PP03"
         mc:Ignorable="d"
-        Title="Documents_EU" Height="700" Width="1000" WindowStartupLocation="CenterScreen" Background="LightGray">
+        Title="Documents_EU" Height="800" Width="1200" WindowStartupLocation="CenterScreen" Background="LightGray">
     <Grid>
 
-        
-        
+
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="80*"></RowDefinition>
-            <RowDefinition Height="80*"></RowDefinition>
-            <RowDefinition Height="80*"></RowDefinition>
-            <RowDefinition Height="80*"></RowDefinition>
-            <RowDefinition Height="80*"></RowDefinition>
-            <RowDefinition Height="80*"></RowDefinition>
-            <RowDefinition Height="43*"></RowDefinition>
-            <RowDefinition Height="116*"></RowDefinition>
-            <RowDefinition Height="80*"></RowDefinition>
+            <RowDefinition Height="40*"></RowDefinition>
+            <RowDefinition Height="50*"></RowDefinition>
+            <RowDefinition Height="50*"></RowDefinition>
+            <RowDefinition Height="60*"></RowDefinition>
+            <RowDefinition Height="60*"></RowDefinition>
+
+            <RowDefinition Height="124*"></RowDefinition>
+            <RowDefinition Height="77*"></RowDefinition>
+            <RowDefinition Height="59*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
-
             <ColumnDefinition></ColumnDefinition>
-
         </Grid.ColumnDefinitions>
-        <Label Name="lblTitle" Content="Документы учебной единицы" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+        
+        <Label Name="lblTitle" Content="Документы учебной единицы" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1"
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30"></Label>
-        <DataGrid Name="dgDocuments_EU" Grid.Row="1" IsReadOnly="True" Grid.Column="0" Grid.ColumnSpan="2"
-                Grid.RowSpan="3" ColumnWidth="auto" AutoGenerateColumns="True" AutoGeneratingColumn="DgDocuments_EU_AutoGeneratingColumn"  Loaded="DgDocuments_EU_Loaded">
+        <DataGrid Name="dgDocuments_EU" IsReadOnly="True" Grid.Column="1" Grid.ColumnSpan="1"
+                Grid.RowSpan="5" ColumnWidth="auto" AutoGenerateColumns="True" AutoGeneratingColumn="DgDocuments_EU_AutoGeneratingColumn"  Loaded="DgDocuments_EU_Loaded" Margin="30,30,30,71"/>
+
+        <DataGrid Name="dgTest" Grid.Row="5" IsReadOnly="True" Grid.Column="1" Grid.ColumnSpan="1" Visibility="Collapsed"
+                Grid.RowSpan="2" ColumnWidth="auto" AutoGenerateColumns="True" AutoGeneratingColumn="dgTest_AutoGeneratingColumn"  Loaded="DgDocuments_EU_Loaded" Margin="30,0" >
         </DataGrid>
-        <UniformGrid Grid.Row="4" Grid.Column="0">
+
+
+
+        <UniformGrid Grid.Row="1" Grid.Column="0">
             <StackPanel Grid.Column="1" >
                 <Label FontSize="16" Name="lblDocument_Title" Content="Название документа" Grid.Row="5" ></Label>
-                <Border BorderThickness="1" BorderBrush="Black"  >
-                    <TextBox Background="LightGray" Name="tbDocument_Title" Grid.Row="2" 
+                <Border BorderThickness="0" BorderBrush="Black"  >
+                    <TextBox Background="LightGray" Name="tbDocument_Title" Margin="20,0,0,0" Grid.Row="2"  
                              Text="{Binding SelectedItem.Document_Title,
-                                 ElementName=dgDocuments_EU}"></TextBox>
-                </Border>
-            </StackPanel>
-        </UniformGrid>
-
-        <UniformGrid Grid.Row="6" Grid.Column="0">
-            <TextBlock>
-                <Hyperlink FontSize="16" Foreground="Black" NavigateUri="https://drive.google.com/drive/u/0/my-drive" RequestNavigate="Hyperlink_RequestNavigate">Перейти на диск</Hyperlink>
-            </TextBlock>
-        </UniformGrid>
-        
-        
-        <UniformGrid Grid.Row="4" Grid.Column="1">
-            <StackPanel Grid.Column="1" >
-                <Label FontSize="16" Name="lblLink_To_The_Document" Content="Ссылка на документ" Grid.Row="5" ></Label>
-                <Border BorderThickness="1" BorderBrush="Black"  >
-                    <TextBox Background="LightGray" Name="tbLink_To_The_Document" Grid.Row="2" 
-                             Text="{Binding SelectedItem.Link_To_The_Document,
                                  ElementName=dgDocuments_EU}">
-                        
+
                     </TextBox>
                 </Border>
             </StackPanel>
         </UniformGrid>
 
-        <UniformGrid Grid.Row="5" Grid.Column="0">
+        <UniformGrid Grid.Row="8" Grid.Column="2">
+            <TextBlock Margin="448,55,0,0">
+                <Hyperlink FontSize="16" Foreground="Black" NavigateUri="https://drive.google.com/drive/u/0/my-drive" RequestNavigate="Hyperlink_RequestNavigate">Перейти на диск</Hyperlink>
+            </TextBlock>
+        </UniformGrid>
+
+
+        <UniformGrid Grid.Row="2" Grid.Column="0">
+            <StackPanel Grid.Column="1" >
+                <Label FontSize="16" Name="lblLink_To_The_Document" Content="Ссылка на документ" Grid.Row="5" ></Label>
+                <Border BorderThickness="0" BorderBrush="Black"  >
+                    <TextBox Background="LightGray" Name="tbLink_To_The_Document" Margin="20,0,0,0" Grid.Row="2" 
+                             Text="{Binding SelectedItem.Link_To_The_Document,
+                                 ElementName=dgDocuments_EU}">
+
+                    </TextBox>
+                </Border>
+            </StackPanel>
+        </UniformGrid>
+
+        <UniformGrid Grid.Row="3" Grid.Column="0">
             <StackPanel Grid.Column="1" >
                 <Label FontSize="16" Name="lblDocument_Template" Content="Шаблон" Grid.Row="5" ></Label>
-                <ComboBox Name="cbDocument_Template" Height="30" SelectedValue="{Binding SelectedItem.Document_Template_ID,
+                <Border BorderThickness="0" BorderBrush="Black"  >
+                    <ComboBox Name="cbDocument_Template" IsReadOnly="True" Height="30" SelectionChanged="cbDocument_Template_SelectionChanged"  Margin="20,0,0,0" SelectedValue="{Binding SelectedItem.Document_Template_ID,
                         ElementName=dgDocuments_EU}">
-                    
-                </ComboBox>
-        
+
+                    </ComboBox>
+                </Border>
+
             </StackPanel>
         </UniformGrid>
 
-        <UniformGrid Grid.Row="5" Grid.Column="1">
+        <UniformGrid Grid.Row="4" Grid.Column="0">
             <StackPanel Grid.Column="1" >
                 <Label FontSize="16" Name="lblEU_CMK_RUP" Content="Префикс" Grid.Row="5" ></Label>
-                <ComboBox Name="cbEU_CMK_RUP" Height="30" SelectedValue="{Binding SelectedItem.EU_CMK_RUP_ID,
+                <Border BorderThickness="0" BorderBrush="Black"  >
+                    <ComboBox Name="cbEU_CMK_RUP" Height="30" IsReadOnly="True" Margin="20,0,0,0" SelectedValue="{Binding SelectedItem.EU_CMK_RUP_ID,
                         ElementName=dgDocuments_EU}"></ComboBox>
-
+                </Border>
             </StackPanel>
         </UniformGrid>
-        
-        
 
 
-        <UniformGrid Grid.Row="7" Grid.ColumnSpan="2">
+
+
+        <UniformGrid Grid.Row="5" Grid.ColumnSpan="1">
             <StackPanel>
                 <!--<Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" x:Name="bt1" Content="1" Height="30" Click="Bt1_Click"   />-->
-                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" x:Name="btDocuments_EU_InsertType" Content="Добавить запись" Height="30" Click="BtDocuments_EU_InsertType_Click"   />
-                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" x:Name="btDocuments_EU_UpdateType" Content="Изменить запись" Height="30" Click="BtDocuments_EU_UpdateType_Click"   />
-                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" x:Name="btDocuments_EU_DeleteType" Content="Удалить запись" Height="30" Click="BtDocuments_EU_DeleteType_Click"   />
+                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" x:Name="btDocuments_EU_InsertType" 
+                        Content="Добавить запись" Height="30" Margin="125,10,125,17" Click="BtDocuments_EU_InsertType_Click"   />
+                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" x:Name="btDocuments_EU_UpdateType" 
+                        Content="Изменить запись" Height="30" Margin="125,10,125,17" Click="BtDocuments_EU_UpdateType_Click"   />
+                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" x:Name="btDocuments_EU_DeleteType" 
+                        Content="Удалить запись" Height="30" Margin="125,10,125,17" Click="BtDocuments_EU_DeleteType_Click"   />
             </StackPanel>
         </UniformGrid>
-        <UniformGrid Grid.Row="8" Grid.Column="0">
+        <UniformGrid Grid.Row="6" Grid.Column="0">
             <StackPanel>
                 <TextBox Background="LightGray" Name="tbSearch"  Height="30" Grid.Column="0" ></TextBox>
-                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btSearch" Content="Поиск" Height="30" VerticalAlignment="Top" Click="BtSearch_Click"></Button>
-                <CheckBox Name="chbFilter" Content="Отфильтровать" VerticalAlignment="Center"  FontSize="10" Height="20" ></CheckBox>
-                
+                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btSearch" Content="Поиск" Height="30" 
+                        VerticalAlignment="Top" Click="BtSearch_Click" Margin="125,13,125,0"></Button>
+                <CheckBox Name="chbFilter" Content="Отфильтровать" VerticalAlignment="Center"  FontSize="10" Height="20" >
+                </CheckBox>
+
             </StackPanel>
         </UniformGrid>
-        <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btClose" Content="Закрыть" Grid.Row="8" Grid.Column="1"  Margin="0,0,0,20" Click="BtClose_Click"  />
+        <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btClose" Content="Закрыть" Grid.Row="8" Grid.Column="0" 
+                Margin="125,25,125,27" Click="BtClose_Click" Height="30"  />
+
+
+        <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btOpen" Content="Показать незавершённые ↓" Grid.Row="5" Grid.Column="1" 
+                Margin="125,26,125,26" Click="btOpen_Click"/>
+
+        <Button Background ="DarkGray" Foreground="White"  Visibility="Hidden" FontFamily="Verdana" FontSize="16" Name="btHide" Content="Скрыть ↑" Grid.Row="7" Grid.Column="1" 
+                Margin="125,26,250,26" Click="btHide_Click" />
 
     </Grid>
 </Window>
