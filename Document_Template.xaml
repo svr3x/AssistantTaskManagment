@@ -1,0 +1,70 @@
+﻿<Window x:Class="PP03.Document_Template"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:design="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:PP03"
+        mc:Ignorable="d"
+        Title="Document_Template" Height="800" Width="1200" WindowStartupLocation="CenterScreen" Loaded="Document_Template_Loaded" Background="LightGray">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="88*"></RowDefinition>
+            <RowDefinition Height="70*"></RowDefinition>
+            <RowDefinition Height="70*"></RowDefinition>
+           
+            <RowDefinition Height="127*"></RowDefinition>
+            <RowDefinition Height="84*"></RowDefinition>
+            <RowDefinition Height="65*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Name="lblTitle" Content="Шаблоны документов" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30">
+            
+        </Label>
+        <DataGrid Name="dgDocument_Template" IsReadOnly="True" Grid.Column="1" Margin="30,40,30,40"
+                Grid.RowSpan="7" ColumnWidth="auto" AutoGenerateColumns="True" AutoGeneratingColumn="dgDocument_Template_AutoGeneratingColumn"  />
+        <UniformGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
+            <StackPanel Grid.Column="1" >
+                <Label Name="lblDocument_Name" FontSize="16" Content="Название документа:" Grid.Row="5" ></Label>
+                <Border BorderThickness="0" BorderBrush="Black"  >
+                    <TextBox Background="LightGray" Name="tbDocument_Name" Grid.Row="2" Margin="20,0,0,0"
+                             Text="{Binding SelectedItem.Document_Name,
+                                 ElementName=dgDocument_Template}">
+                        
+                    </TextBox>
+                </Border>
+            </StackPanel>
+        </UniformGrid>
+        <UniformGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1">
+            <StackPanel Grid.Column="0" >
+                <Label Name="lblPath_To_File" FontSize="16" Content="Путь к файлу:" Grid.Row="5" ></Label>
+                <Border BorderThickness="0" BorderBrush="Black" >
+                    <TextBox Background="LightGray" Name="tbPath_To_File" Grid.Row="2" Margin="20,0,0,0" 
+                             Text="{Binding  SelectedItem.Path_To_File,
+                                 ElementName=dgDocument_Template}"></TextBox>
+                </Border>
+            </StackPanel>
+        </UniformGrid>
+        <UniformGrid Grid.Row="3" Grid.ColumnSpan="1">
+            <StackPanel>
+                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btDocument_Template_InsertType" Content="Добавить запись" Height="30" Click="BtDocument_Template_InsertType_Click" Margin="125,10,125,17" ></Button>
+                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btDocument_Template_UpdateType" Content="Изменить запись" Height="30" Click="BtDocument_Template_UpdateType_Click" Margin="125,10,125,17"></Button>
+                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btDocument_Template_DeleteType" Content="Удалить запись" Height="30" Click="BtDocument_Template_DeleteType_Click" Margin="125,10,125,17"></Button>
+            </StackPanel>
+            
+        </UniformGrid>
+        <UniformGrid Grid.Row="4" Grid.Column="0">
+            <StackPanel>
+                <TextBox Background="LightGray" Name="tbSearch"  Height="30" Grid.Column="0" Margin="20,10,20,0"></TextBox>
+                <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btSearch" Content="Поиск" Height="30" VerticalAlignment="Top" Click="btSearch_Click" Margin="125,13,125,0"></Button>
+                <CheckBox Name="chbFilter" Content="Отфильтровать" VerticalAlignment="Center"  FontSize="10" Height="20" ></CheckBox>
+            </StackPanel>
+        </UniformGrid>
+        <Button Background ="DarkGray" Foreground="White" FontFamily="Verdana" FontSize="16" Name="btClose" Content="Закрыть" Grid.Row="6" Grid.Column="0"  Margin="125,25,125,27" Click="btClose_Click" Height="30"/>
+    </Grid>
+</Window>
+
